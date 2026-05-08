@@ -9,6 +9,14 @@ const app = express();
 app.use(express.json()); // Allows us to parse JSON data from requests
 app.use(cors());         // Enables Cross-Origin Resource Sharing
 
+// Import Routes
+const authRoutes = require('./routes/authRoutes');
+const jobRoutes = require('./routes/jobRoutes');
+
+// Use Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/jobs', jobRoutes);
+
 // Test Route
 app.get('/', (req, res) => {
   res.send('ATS Recruitment API is running!');
