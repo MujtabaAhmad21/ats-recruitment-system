@@ -37,7 +37,7 @@ const HrDashboard = () => {
   const handleCreateJob = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/jobs', formData, {
+      const response = await axios.post('http://localhost:5001/api/jobs', formData, {
         headers: {
           Authorization: `Bearer ${token}` // This is how we pass the security check!
         }
