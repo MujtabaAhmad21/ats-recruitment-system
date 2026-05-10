@@ -36,3 +36,7 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((error) => {
     console.error('❌ Error connecting to MongoDB:', error.message);
   });
+
+
+const applicationRoutes = require('./routes/applicationRoutes'); // Add import
+app.use('/api/applications', applicationRoutes); // Add usage
