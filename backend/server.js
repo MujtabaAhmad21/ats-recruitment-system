@@ -1,0 +1,40 @@
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+
+const app = express();
+
+// Middleware
+app.use(express.json()); // Allows us to parse JSON data from requests
+app.use(cors());         // Enables Cross-Origin Resource Sharing
+
+// Import Routes
+const authRoutes = require('./routes/authRoutes');
+const jobRoutes = require('./routes/jobRoutes');
+const applicationRoutes = require('./routes/applicationRoutes'); // Add import
+
+// Use Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/jobs', jobRoutes);
+app.use('/api/applications', applicationRoutes); // Add usage
+
+// Test Route
+app.get('/', (req, res) => {
+  res.send('ATS Recruitment API is running!');
+});
+
+// Database Connection & Server Initialization
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log('✅ Successfully connected to MongoDB Atlas (ats_db)');
+    
+    // We only start the server IF the database connects successfully
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+      console.log(`🚀 Server is running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error('❌ Error connecting to MongoDB:', error.message);
+  });
